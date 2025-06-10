@@ -11,7 +11,7 @@ try:
 except ImportError:
     import simplejson as json
 
-__version__ = '3.0.6'
+__version__ = '3.1.0'
 __author__ = 'Raul Granados'
 
 api_lite = False
@@ -737,6 +737,14 @@ class CfdiMultiEmisor(Facturama):
         :return: None
         """
         return cls.build_http_request('get', '{}/{}'.format('cfdis', oid), version=2)
+    
+    @classmethod
+    def sent_by_email(cls, oid, email, subject = None, comments = None, issuerEmail = None):
+        """
+        :return: send Cfdi by email
+        """
+        type = 'issuedLite'
+        return cls.build_http_request('post', '{}?cfdiType={}&cfdiId={}&email={}&subject={}&comments={}&issuerEmail={}'.format('Cfdi', type, oid, email, subject, comments, issuerEmail))
 
 
 class csdsMultiEmisor(Facturama):
